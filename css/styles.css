@@ -1,0 +1,44 @@
+div, h1 {
+  margin: 20px auto 30px;
+  text-align: center;
+}
+table, button {
+  margin: auto;
+}
+
+td {
+  border: black 2px solid;
+  height: 70px;
+  width: 70px;
+  border-radius: 40%;
+  margin: 10px;
+  text-align: center;
+}
+
+tr {
+  margin: 10px;
+}
+
+td.store {
+  border-radius: 30%;
+}
+
+td.p1 {
+  color: blue;
+}
+
+td.p2 {
+  color: red;
+}
+
+td#player-one{
+  color: blue;
+}
+
+td#player-two{
+  color: red;
+}
+
+
+
+
