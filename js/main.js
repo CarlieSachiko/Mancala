@@ -81,9 +81,6 @@ function moveStones(s, value, idx){
   for(var i = (idx+1); i < newVal; i++){
     if (i === s) {
       console.log('skip!');
-      newVal+=1;
-      // console.log(i);
-      // return i;
       board[newVal+1] += 1;
       continue stoneLoop;
     } else if(i <= 13 && i !== s){
@@ -91,12 +88,18 @@ function moveStones(s, value, idx){
       repeatTurn(i, newVal);
       captureStones(i, newVal);
     } else if (i > 13){
-      for(var j = 0; j < (newVal - 14); j++){
-        board[j] += 1;
-        repeatTurn(j, newVal);
-        captureStones(j, newVal);
-      }
-    return;
+        stoneLoop2:
+          for(var j = 0; j < (newVal - 14); j++){
+            if (j === s) {
+              console.log('skip!');
+              board[newVal-14] += 1;
+              continue stoneLoop2;
+            }
+              board[j] += 1;
+              repeatTurn(j, newVal);
+              captureStones(j, newVal);
+            }
+        return;
     }
   }
 }
