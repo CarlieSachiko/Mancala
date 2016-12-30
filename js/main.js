@@ -15,35 +15,37 @@
 3. Once all cells are 0, check for winner
 /*
 
+
 /*--- VARIABLES ---*/
-var board, player;
+var player, p1Pits, p2Pits, p1Store, p2Store;
 var p1Color = 'blue';
 var p2Color = 'red';
 var $player = $('span#player');
 var $new_game = $('div#new-game');
-
-
+var $cell = $('td.cell');
+var $p1_store = $('td#player-one');
+var $p2_store = $('td#player-two');
 
 /*--- EVENT LISTENERS ---*/
 $new_game.on('click', init);
+$cell.on('click', handleClick);
 
-
-
-
-
+/*--- OBJECTS ---*/
+var Mancala = function () {
+  this.current_pits = [4,4,4,4,4,4];
+  this.other_pits = [4,4,4,4,4,4];
+  this.current_store = 0;
+  this.other_store = 0;
+};
 
 /*--- FUNCTIONS ---*/
-function init(){
-  player = 1;
-  setPlayerMsg();
+
+Mancala.prototype.get_stones = function (pit){
+  if
 }
 
-init();
 
-function setPlayerMsg(){
-  if (player === 1){
-    $player.html('player one').css('color', p1Color);
-  } else {
-    $player.html('player two').css('color', p2Color);
-  }
-}
+
+
+
+
