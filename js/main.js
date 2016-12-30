@@ -40,6 +40,7 @@ $bowl.on('click', handleClick);
 
 /*--- FUNCTIONS ---*/
 function init(){
+  gameOver = false;
   player = 1;
   board = [4,4,4,4,4,4,0,4,4,4,4,4,4,0];
   setPlayerMsg();
@@ -192,42 +193,66 @@ function addStonesP2 (store, x, inverse){
   board[x - inverse] = 0;
 }
 
-// function checkWinner(){
-//   if(emptySide){
-//     if(board[6] > board[13]){
-//       $win_msg.html('Player One wins!');
-//     } else {
-//       $win_msg.html('Player Two wins!');
-//     }
-//   }
-// }
+function finalStones(){
+  if(p1Empty()){
+    for(var i = 7; i < 13; i++){
+      board[13]+=board[i];
+      board[i] = 0;
+    }
+    updateDisplay();
+    checkWinner();
+  } else if (p2Empty()){
+    for(var i = 0; i < 6; i++){
+      board[6] += board[i];
+      board[i] = 0;
+    }
+    updateDisplay();
+    checkWinner();
+  } else return false;
+}
 
-// function emptySide(){
-//   for (var i = 0; i <= 5; i++){
-//     if (board[i] === 0){
-//       return true
-//     } else return false;
-//   }
-//   for (var i = 7; i <= 12; i++){
-//     if (board[i] === 0){
-//       return true
-//     } else return false;
-//   }
-// }
+function checkWinner(){
+  if(board[6] > board[13]){
+    $win_msg.html('Player One wins!');
+    gameOver = true;
+  } else {
+    $win_msg.html('Player Two wins!');
+    gameOver = true;
+  }
+}
+
+function p1Empty(){
+  if (board[0] === 0 && board[1] === 0 && board[2] === 0 && board[3] === 0 && board[4] === 0 && board[5] === 0){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function p2Empty(){
+  if (board[7] === 0 && board[8] === 0 && board[9] === 0 && board[10] === 0 && board[11] === 0 && board[12] === 0){
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function handleClick(evt){
-  var value = parseInt($(this).text());
-  var idx = parseInt($(this).attr('id'));
-  if (player === 1 && p1Side(idx)){
-    moveStones(13, value, idx);
-    updateDisplay();
-    switchPlayer();
-  } else if (player === 2 && p2Side(idx)){
-    moveStones(6, value, idx);
-    updateDisplay();
-    switchPlayer();
-  }
-  // checkWinner();
+  if (!gameOver){
+    var value = parseInt($(this).text());
+    var idx = parseInt($(this).attr('id'));
+    if (player === 1 && p1Side(idx)){
+      moveStones(13, value, idx);
+      updateDisplay();
+      switchPlayer();
+      finalStones();
+    } else if (player === 2 && p2Side(idx)){
+      moveStones(6, value, idx);
+      updateDisplay();
+      switchPlayer();
+      finalStones();
+    }
+  } else return;
 }
 
 
