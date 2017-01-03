@@ -18,7 +18,7 @@ For this game I used:
 ###Installation Instructions
 Follow the link below to play!
 
-[Mancala](http://boardgames.about.com/cs/mancala/ht/play_mancala.htm)
+[Mancala](https://carliesachiko.github.io/Mancala/)
 
 --------
 ###Next Steps
