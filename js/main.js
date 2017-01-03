@@ -17,22 +17,14 @@
 
 /*--- VARIABLES ---*/
 var board, player, anotherTurn, gameOver;
-var p1Color = 'blue';
-var p2Color = 'red';
+var p1Color = '#00BDBA';
+var p2Color = '#8F00D3';
 var $player = $('span#player');
 var $new_game = $('div#new-game');
 var $bowl = $('td.bowl');
 var $p1_store = $('td#player-one');
 var $p2_store = $('td#player-two');
 var $win_msg = $('div#win-msg');
-var p1SkipStore = [13].reduce(function (res, key) {
-  res[key] = true;
-  return res;
-  }, {});
-var p2SkipStore = [6].reduce(function (res, key) {
-  res[key] = true;
-  return res;
-  }, {});
 
 /*--- EVENT LISTENERS ---*/
 $new_game.on('click', init);
@@ -45,9 +37,9 @@ function init(){
   board = [4,4,4,4,4,4,0,4,4,4,4,4,4,0];
   setPlayerMsg();
   updateDisplay();
+  $win_msg.html('');
 }
 
-init();
 
 function updateDisplay(){
   for(var i = 0; i<board.length; i++){
@@ -76,15 +68,16 @@ function switchPlayer(){
 
 function moveStones(s, value, idx){
   board[idx] = 0;
-  var skip = false;
   var newVal = value + idx + 1;
   stoneLoop:
   for(var i = (idx+1); i < newVal; i++){
     if (i === s) {
-      console.log('skip!');
+      newVal += 1;
       board[newVal+1] += 1;
+      repeatTurn((newVal+1), newVal);
+      captureStones((newVal+1), newVal);
       continue stoneLoop;
-    } else if(i <= 13 && i !== s){
+    } else if (i <= 13 && i !== s){
       board[i] += 1;
       repeatTurn(i, newVal);
       captureStones(i, newVal);
@@ -92,22 +85,23 @@ function moveStones(s, value, idx){
         stoneLoop2:
           for(var j = 0; j < (newVal - 14); j++){
             if (j === s) {
-              console.log('skip!');
-              board[newVal-14] += 1;
+              j++;
+              board[j] += 1;
+              repeatTurn(j, (newVal - 13));
+              captureStones(j, (newVal - 13));
               continue stoneLoop2;
             }
               board[j] += 1;
               repeatTurn(j, newVal);
               captureStones(j, newVal);
             }
-        return;
+      return;
     }
   }
 }
 
 function repeatTurn(x, newVal){
   if (player === 1 && x === newVal-1 && x === 6){
-    console.log("p1 again");
     anotherTurn = true;
   } else if (player === 2 && x === newVal-1 && x === 13){
     anotherTurn = true;
@@ -118,48 +112,21 @@ function repeatTurn(x, newVal){
 
 function captureStones(x, newVal){
   if (x === newVal-1 && board[x] === 1 && x !== 6 && x !== 13){
-    console.log('capture!');
     if (player === 1 && p1Side(x)){
-      switch(x){
-        case 0:
-          addStonesP1 (6, 0, 12);
-          break;
-        case 1:
-          addStonesP1 (6, 1, 10);
-          break;
-        case 2:
-          addStonesP1 (6, 2, 8);
-          break;
-        case 3:
-          addStonesP1 (6, 3, 6);
-          break;
-        case 4:
-          addStonesP1 (6, 4, 4);
-          break;
-        case 5:
-          addStonesP1 (6, 5, 2);
-          break;
+      for (var i = 0, j = 12; i < 6; i++, j-=2){
+        switch(x){
+          case i:
+            addStonesP1 (6, i, j);
+            break;
+        }
       }
-    } else if (player === 2 && p2Side){
-      switch(x){
-        case 12:
-          addStonesP2 (13, 12, 12);
-          break;
-        case 11:
-          addStonesP2 (13, 11, 10);
-          break;
-        case 10:
-          addStonesP2 (13, 10, 8);
-          break;
-        case 9:
-          addStonesP2 (13, 9, 6);
-          break;
-        case 8:
-          addStonesP2 (13, 8, 4);
-          break;
-        case 7:
-          addStonesP2 (13, 7, 2);
-          break;
+    } else if (player === 2 && p2Side(x)){
+      for (var i = 12, j = 12; i > 6; i--, j-=2){
+        switch(x){
+          case i:
+            addStonesP2 (13, i, j);
+            break;
+        }
       }
     }
   }
@@ -255,6 +222,7 @@ function handleClick(evt){
   } else return;
 }
 
+init();
 
 
 
