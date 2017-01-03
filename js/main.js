@@ -12,7 +12,7 @@
     -if that empty cell is on your side, player gets to capture that #
     and the # opposite it on the other player's side
   -if finish on store, that player gets to go again
-3. Once all cells are 0, check for winner
+3. Once all cells are 0 on one side, check for winner
 /*
 
 /*--- VARIABLES ---*/
@@ -20,14 +20,14 @@ var board, player, anotherTurn, gameOver;
 var p1Color = '#00BDBA';
 var p2Color = '#8F00D3';
 var $player = $('span#player');
-var $new_game = $('div#new-game');
+var $newGame = $('div#new-game');
 var $bowl = $('td.bowl');
-var $p1_store = $('td#player-one');
-var $p2_store = $('td#player-two');
-var $win_msg = $('div#win-msg');
+var $p1Store = $('td#player-one');
+var $p2Store = $('td#player-two');
+var $winMsg = $('div#win-msg');
 
 /*--- EVENT LISTENERS ---*/
-$new_game.on('click', init);
+$newGame.on('click', init);
 $bowl.on('click', handleClick);
 
 /*--- FUNCTIONS ---*/
@@ -37,7 +37,8 @@ function init(){
   board = [4,4,4,4,4,4,0,4,4,4,4,4,4,0];
   setPlayerMsg();
   updateDisplay();
-  $win_msg.html('');
+  $winM
+sg.html('');
 }
 
 
@@ -46,8 +47,8 @@ function updateDisplay(){
       var $bowlIdx = $('#' + i);
       $bowlIdx.html(board[i]);
   }
-  $p1_store.html(board[6]);
-  $p2_store.html(board[13]);
+  $p1Store.html(board[6]);
+  $p2Store.html(board[13]);
 }
 
 function setPlayerMsg(){
@@ -148,27 +149,27 @@ function p2Side(x){
   }
 }
 
-function addStonesP1 (store, x, inverse){
+function addStonesP1(store, x, inverse){
   board[store] += board[x + inverse] + 1;
   board[x] = 0;
   board[x + inverse] = 0;
 }
 
-function addStonesP2 (store, x, inverse){
+function addStonesP2(store, x, inverse){
   board[store] += board[x - inverse] + 1;
   board[x] = 0;
   board[x - inverse] = 0;
 }
 
-function finalStones(){
-  if(p1Empty()){
+function addFinalStones(){
+  if(p1SideEmpty()){
     for(var i = 7; i < 13; i++){
       board[13]+=board[i];
       board[i] = 0;
     }
     updateDisplay();
     checkWinner();
-  } else if (p2Empty()){
+  } else if (p2SideEmpty()){
     for(var i = 0; i < 6; i++){
       board[6] += board[i];
       board[i] = 0;
@@ -180,15 +181,17 @@ function finalStones(){
 
 function checkWinner(){
   if(board[6] > board[13]){
-    $win_msg.html('Player One wins!');
+    $winM
+  sg.html('Player One wins!');
     gameOver = true;
   } else {
-    $win_msg.html('Player Two wins!');
+    $winM
+  sg.html('Player Two wins!');
     gameOver = true;
   }
 }
 
-function p1Empty(){
+function p1SideEmpty(){
   if (board[0] === 0 && board[1] === 0 && board[2] === 0 && board[3] === 0 && board[4] === 0 && board[5] === 0){
     return true;
   } else {
@@ -196,7 +199,7 @@ function p1Empty(){
   }
 }
 
-function p2Empty(){
+function p2SideEmpty(){
   if (board[7] === 0 && board[8] === 0 && board[9] === 0 && board[10] === 0 && board[11] === 0 && board[12] === 0){
     return true;
   } else {
@@ -212,12 +215,12 @@ function handleClick(evt){
       moveStones(13, value, idx);
       updateDisplay();
       switchPlayer();
-      finalStones();
+      addFinalStones();
     } else if (player === 2 && p2Side(idx)){
       moveStones(6, value, idx);
       updateDisplay();
       switchPlayer();
-      finalStones();
+      addFinalStones();
     }
   } else return;
 }
