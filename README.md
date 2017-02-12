@@ -6,6 +6,8 @@ Dots and Boxes is a classic 2 player game played around the world with nearly 80
 
 [Click here for gameplay rules](http://boardgames.about.com/cs/mancala/ht/play_mancala.htm)
 
+![alt](http://i.imgur.com/QAl8Yzh.png)
+
 --------
 ###Technologies Used
 For this game I used:
