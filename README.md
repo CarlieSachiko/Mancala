@@ -2,7 +2,7 @@
 ####Created By Carlie Clippinger
 --------
 ###About Mancala
-Dots and Boxes is a classic 2 player game played around the world with nearly 800 different names. The word *mancala* comes from the Arabic word *naqala* meaning "to move". 
+Mancala is a classic 2 player game played around the world with nearly 800 different names. The word *mancala* comes from the Arabic word *naqala* meaning "to move". 
 
 [Click here for gameplay rules](http://boardgames.about.com/cs/mancala/ht/play_mancala.htm)
 
