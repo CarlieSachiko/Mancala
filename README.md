@@ -6,6 +6,8 @@ Mancala is a classic 2 player game played around the world with nearly 800 diffe
 
 [Click here for gameplay rules](http://boardgames.about.com/cs/mancala/ht/play_mancala.htm)
 
+For wireframes and user stories check out the [Trello board](https://trello.com/b/8ZNSL9QN/mancala).
+
 ![alt](http://i.imgur.com/QAl8Yzh.png)
 
 --------
